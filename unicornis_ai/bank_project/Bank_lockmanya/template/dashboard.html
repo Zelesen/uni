@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Dashboard</title>
+    <style>
+        
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(to bottom right, #e0e7ff, #ddd6fe, #fed7e2);
+   
+}
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+}
+
+.title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #3730a3;
+}
+
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+@media(min-width: 768px) {
+    .metrics {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(min-width: 1024px) {
+    .metrics {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.metric-card {
+    background: #4c1d95;
+    color: #fff;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease;
+}
+
+.metric-card:hover {
+    transform: scale(1.05);
+}
+
+.purple {
+    background: linear-gradient(to bottom right, #a855f7, #6366f1);
+}
+
+.pink {
+    background: linear-gradient(to bottom right, #ec4899, #f43f5e);
+}
+
+.yellow {
+    background: linear-gradient(to bottom right, #f59e0b, #f97316);
+}
+
+.green {
+    background: linear-gradient(to bottom right, #10b981, #22c55e);
+}
+
+.metric-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.metric-value {
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+.metric-change {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.charts {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+@media(min-width: 1024px) {
+    .charts {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+.chart-card {
+    background: #fff;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sales .chart-title {
+    background: linear-gradient(to right, #6366f1, #a855f7);
+    color: #fff;
+    padding: 1rem;
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+.chart-content {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.amount {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #4c1d95;
+}
+
+.change-text {
+    font-size: 0.875rem;
+    color: #10b981;
+}
+
+.details-btn {
+    background: linear-gradient(to right, #6366f1, #a855f7);
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    margin-top: 1rem;
+    cursor: pointer;
+    border: none;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.details-btn:hover {
+    background: linear-gradient(to right, #4c1d95, #7c3aed);
+    transform: scale(1.05);
+}
+
+.last-month {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.separator {
+    height: 1px;
+    background: #e0e7ff;
+    margin: 1rem 0;
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #4c1d95;
+}
+
+.charts-overview {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media(min-width: 768px) {
+    .charts-overview {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.pie-charts {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media(min-width: 768px) {
+    .pie-charts {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.chart-title {
+    background: linear-gradient(to right, #6366f1, #a855f7);
+    color: #fff;
+    padding: 1rem;
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+        
+/* Notification container */
+.notification-container {
+    position: relative;
+    display: inline-block;
+}
+.notification-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    padding: 10px;
+    font-size: 1.5rem;
+    color: #000000;
+    transition: transform 0.3s ease;
+}
+.notification-btn:hover {
+    transform: scale(1.2);
+}
+
+.notification-btn:focus {
+    outline: none;
+}
+
+.notification-dropdown {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 250px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 10;
+}
+
+.notification-container:hover .notification-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Notification list */
+.notification-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notification-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.notification-list li:last-child {
+    border-bottom: none;
+}
+
+        
+    </style>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar-toggle" style="background: linear-gradient(135deg, #6366f1 30%, #a855f7 70%);">
+            <div class="sidebar-logo">
+                <img src="/static/fyx.png" class="dashlogo" alt="User Profile">
+                <a href="#">FYX.AI</a>
+            </div>
+            <!-- Sidebar Navigation -->
+            <ul class="sidebar-nav p-0">
+                <li class="sidebar-item">
+                    <a href="/dashboard" class="sidebar-link">
+                        <i class="lni lni-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#campaignMenu" aria-expanded="true" aria-controls="campaignMenu">
+                        <i class="lni lni-protection"></i>
+                        <span>Campaign</span>
+                    </a>
+                    <ul id="campaignMenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="/create_campaign" class="sidebar-link">Create Campaign</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="/view_campaigns" class="sidebar-link">View Campaign</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#audienceMenu" aria-expanded="true" aria-controls="audienceMenu">
+                        <i class="lni lni-users"></i>
+                        <span>Audience</span>
+                    </a>
+                    <ul id="audienceMenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="/add_product" class="sidebar-link">Create Audience</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="/product_list" class="sidebar-link">View Audience</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/search" class="sidebar-link">
+                        <i class="lni lni-search"></i>
+                        <span>Search Audience</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/report" class="sidebar-link">
+                        <i class="lni lni-book"></i>
+                        <span>Reports</span>
+                    </a>
+                </li>
+                <li class="sidebar-item"> <!-- New Settings Item -->
+                    <a href="/setting" class="sidebar-link">
+                        <i class="lni lni-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+            <!-- Sidebar Navigation Ends -->
+            <div class="sidebar-footer">
+                <a href="/" class="sidebar-link">
+                    <i class="lni lni-exit"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+        <!-- Sidebar Ends -->
+
+        <!-- Main Component -->
+        <div class="main">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm" style="padding: 10px;">
+                <div class="container-fluid">
+                    <i class="toggler-btn lni lni-text-align-left"></i>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <form class="d-flex ms-auto" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                        <div class="d-flex align-items-center ms-4">
+                            <!-- Notification Bell -->
+                            <a href="/notification"><div class="notification-container">
+                                    <button class="notification-btn">
+                                        <i class="lni lni-alarm"></i>
+                                        <span class="badge" style="    position: absolute;
+                                        top: 5px;
+                                        right: 5px;
+                                        background-color: #ff4757;
+                                        font-size: 0.8rem;
+                                        padding: 3px 6px;
+                                        border-radius: 50%;
+                                        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);">3</span>
+                                    </button>
+                                    <div class="notification-dropdown">
+                                        <h4>Notifications</h4>
+                                        <ul class="notification-list">
+                                            <li>You have a new message.</li>
+                                            <li>Project deadline tomorrow.</li>
+                                            <li>System update completed.</li>
+                                        </ul>
+                                    </div>
+                                </div></a>
+
+                            <!-- User Profile -->
+                             <a href="/profile">
+                            <img src="/static/user.png" class="rounded-circle border border-light mt-2" alt="User Profile" width="40" height="40"
+                                style="box-shadow: 0 0 5px rgba(0,0,0,0.2);"></a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container mt-2" style="max-width: 1700px; border-radius: 20px; ">
+                <div style="padding: 20px; ">
+                <h1 class="title" style="text-align: start; font-size: large;">DASHBOARD</h1>
+        
+                <div class="metrics" >
+                    <div class="metric-card purple">
+                        <div class="metric-header">
+                            <h5>Closed Campaigns</h5>
+                            <span class="icon">🏆</span>
+                        </div>
+                        <p class="metric-value">0</p>
+                        <small class="metric-change">+0.2% From previous period</small>
+                    </div>
+                    <div class="metric-card pink">
+                        <div class="metric-header">
+                            <h5>Avg CTR</h5>
+                            <span class="icon">🎯</span>
+                        </div>
+                        <p class="metric-value">0%</p>
+                        <small class="metric-change">+0.2% From previous period</small>
+                    </div>
+                    <div class="metric-card yellow">
+                        <div class="metric-header">
+                            <h5>Money Saved</h5>
+                            <span class="icon">💰</span>
+                        </div>
+                        <p class="metric-value">$0.0</p>
+                        <small class="metric-change">+0.2% From previous period</small>
+                    </div>
+                    <div class="metric-card green">
+                        <div class="metric-header">
+                            <h5>Total Audience</h5>
+                            <span class="icon">👥</span>
+                        </div>
+                        <p class="metric-value">0</p>
+                        <small class="metric-change">0% From previous period</small>
+                    </div>
+                </div>
+        
+                <div class="charts">
+                    <div class="chart-card sales" >
+                        <h3 class="chart-title" style="text-align: start;">This Month</h3>
+                        <div class="chart-content">
+                            <h3 class="amount" style="text-align: start;">$0.0</h3>
+                            <p class="change-text" style="text-align: start;">+0.2% From previous period</p>
+                            <button class="details-btn" style="display: flex;">View Details</button>
+                            <p class="last-month" style="display: flex;">Last Month: $0.0</p>
+                        </div>
+                    </div>
+        
+                    <div class="chart-card campaigns">
+                        <div class="chart-content" >
+                            <h5 class="chart-title" style="background: white;color: #4c1d95;text-align: start;">Running Campaigns</h5>
+                            <p class="stat-number" style="text-align:start;padding:0 1rem ;">0</p>
+                            <div class="separator"></div>
+                            <h5 class="chart-title"style="background: white;color: #4c1d95;text-align:start;">Running Audience</h5>
+                            <p class="stat-number" style="text-align:start; padding:0 1rem;">0</p>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="charts-overview">
+                    <div class="chart-card">
+                        <h3 class="chart-title">Sales Overview</h3>
+                        <canvas id="salesChart" style="padding: 20px;"></canvas>
+                        <!-- Bar Chart will be here -->
+                    </div>
+        
+                    <div class="chart-card">
+                        <h3 class="chart-title">User Growth</h3>
+                        <!-- Line Chart will be here -->
+                        <canvas id="userChart" style="padding: 20px;"></canvas>
+                    </div>
+                </div>
+        
+                <div class="pie-charts" style="margin-top: 30px;  ">
+                    <div class="chart-card"  >
+                        <h3 class="chart-title">Campaign Distribution</h3>
+                        <div style=" height:300px;">
+                        <!-- Pie Chart will be here -->
+                        <canvas id="campaignChart" style="padding: 20px;"></canvas>
+                    </div>
+                </div>
+        
+                    <div class="chart-card">
+                        <h3 class="chart-title">Audience Gender Ratio</h3>
+                        <div style=" height:300px;">
+                        <!-- Pie Chart will be here -->
+                        <canvas id="genderChart" style="padding: 20px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+const genderCtx = document.getElementById('genderChart').getContext('2d');
+const genderChart = new Chart(genderCtx, {
+    type: 'pie',
+    data: {
+        labels: ['Male', 'Female', 'Non-binary', 'Others'],
+        datasets: [{
+            label: 'Audience Gender Ratio',
+            data: [50, 30, 15, 5],
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.6)',
+                'rgba(255, 159, 64, 0.6)',
+                'rgba(255, 99, 132, 0.6)',
+                'rgba(201, 203, 207, 0.6)',
+            ],
+            borderColor: 'rgba(255, 255, 255, 1)',
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio:false,
+        
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                    }
+                }
+            }
+        }
+    }
+});
+
+const campaignCtx = document.getElementById('campaignChart').getContext('2d');
+const campaignChart = new Chart(campaignCtx, {
+    type: 'pie',
+    data: {
+        labels: ['Email Campaign', 'Social Media', 'Search Ads', 'Others'],
+        datasets: [{
+            label: 'Campaign Distribution',
+            data: [40, 30, 20, 10],
+            backgroundColor: [
+                'rgba(75, 192, 192, 0.6)',
+                'rgba(255, 99, 132, 0.6)',
+                'rgba(255, 206, 86, 0.6)',
+                'rgba(153, 102, 255, 0.6)',
+            ],
+            borderColor: 'rgba(255, 255, 255, 1)',
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio:false,
+        
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                    }
+                }
+            }
+        }
+    }
+});
+
+const userCtx = document.getElementById('userChart').getContext('2d');
+    const userChart = new Chart(userCtx, {
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May'],
+            datasets: [{
+                label: 'New Users',
+                data: [30, 50, 70, 40, 90],
+                backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                borderColor: 'rgba(153, 102, 255, 1)',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+
+
+
+const salesCtx = document.getElementById('salesChart').getContext('2d');
+    const salesChart = new Chart(salesCtx, {
+        type: 'bar',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May'],
+            datasets: [{
+                label: 'Sales',
+                data: [65, 59, 80, 81, 56],
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+        // Sidebar Toggler
+        const toggler = document.querySelector(".toggler-btn");
+        toggler.addEventListener("click", function () {
+            console.log(document.querySelector("#sidebar"))
+            document.querySelector("#sidebar").classList.toggle("collapsed");
+
+        });
+
+        // Toggle sidebar when clicking on Campaign or Audience
+        const campaignLink = document.querySelector('.sidebar-link[data-bs-target="#campaignMenu"]');
+        const audienceLink = document.querySelector('.sidebar-link[data-bs-target="#audienceMenu"]');
+
+        campaignLink.addEventListener("click", function() {
+            const sidebar = document.querySelector("#sidebar");
+            if (sidebar.classList.contains("collapsed")) {
+                sidebar.classList.toggle("collapsed");
+            }
+        });
+
+        audienceLink.addEventListener("click", function() {
+            const sidebar = document.querySelector("#sidebar");
+            if (sidebar.classList.contains("collapsed")) {
+                sidebar.classList.toggle("collapsed");
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

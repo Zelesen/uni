@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Dashboard</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+           
+            background: linear-gradient(to bottom right, #e0e7ff, #ddd6fe, #fed7e2);
+
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .profile-card {
+            max-width: 1200px; /* Increased width */
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px; /* Increased padding */
+            margin-bottom: 50px;
+        }
+
+        .profile-pic {
+            position: relative;
+            width: 180px; /* Adjusted size */
+            height: 180px; /* Adjusted size */
+            margin: 0 auto;
+            margin-bottom: 20px;
+        }
+
+        .profile-pic img {
+            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-pic button {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: none;
+            color: #fff;
+            border-radius: 50%;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .profile-pic button:hover {
+            background-color: #007bff;
+        }
+
+        .form-control {
+            border-radius: 30px;
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: none;
+        }
+
+        .save-btn,
+        .change-password-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 30px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .save-btn:hover,
+        .change-password-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .change-password-btn {
+            width: auto; /* Set to auto to reduce the width */
+        }
+
+        @media (max-width: 768px) {
+            .profile-card {
+                padding: 20px; /* Adjusted padding for mobile */
+            }
+
+            .form-control {
+                font-size: 0.9rem;
+            }
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .profile-card h5 {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .text-center h2 {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom right, #e0e7ff, #ddd6fe, #fed7e2);
+
+    background-size: 200% 200%;
+    animation: gradientAnimation 10s ease infinite;
+    height: 100%;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Responsive Media Query to Adjust Background for Smaller Screens */
+@media only screen and (max-width: 768px) {
+    body {
+        background-size: 300% 300%; /* Change for smaller screens */
+    }
+}
+/* Notification container */
+.notification-container {
+    position: relative;
+    display: inline-block;
+}
+.notification-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    padding: 10px;
+    font-size: 1.5rem;
+    color: #000000;
+    transition: transform 0.3s ease;
+}
+.notification-btn:hover {
+    transform: scale(1.2);
+}
+
+.notification-btn:focus {
+    outline: none;
+}
+
+.notification-dropdown {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 250px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 10;
+}
+
+.notification-container:hover .notification-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Notification list */
+.notification-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notification-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.notification-list li:last-child {
+    border-bottom: none;
+}
+    </style>
+</head>
+
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar-toggle" style="background: linear-gradient(135deg, #6366f1 30%, #a855f7 70%);">
+            <div class="sidebar-logo">
+                <img src="/static/fyx.png" class="dashlogo" alt="User Profile">
+                <a href="#">FYX.AI</a>
+            </div>
+            <!-- Sidebar Navigation -->
+            <ul class="sidebar-nav p-0">
+                <li class="sidebar-item">
+                    <a href="/dashboard" class="sidebar-link">
+                        <i class="lni lni-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#campaignMenu" aria-expanded="true" aria-controls="campaignMenu">
+                        <i class="lni lni-protection"></i>
+                        <span>Campaign</span>
+                    </a>
+                    <ul id="campaignMenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="/create_campaign" class="sidebar-link">Create Campaign</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="/view_campaign" class="sidebar-link">View Campaign</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#audienceMenu" aria-expanded="true" aria-controls="audienceMenu">
+                        <i class="lni lni-users"></i>
+                        <span>Audience</span>
+                    </a>
+                    <ul id="audienceMenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="/add_product" class="sidebar-link">Create Audience</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="/product_list" class="sidebar-link">View Audience</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/search" class="sidebar-link">
+                        <i class="lni lni-search"></i>
+                        <span>Search Audience</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/report" class="sidebar-link">
+                        <i class="lni lni-book"></i>
+                        <span>Reports</span>
+                    </a>
+                </li>
+            </ul>
+            <!-- Sidebar Navigation Ends -->
+            <div class="sidebar-footer">
+                <a href="/" class="sidebar-link">
+                    <i class="lni lni-exit"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+        <!-- Sidebar Ends -->
+
+        <!-- Main Component -->
+        <div class="main">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm" style="padding: 10px;">
+                <div class="container-fluid">
+                    <i class="toggler-btn lni lni-text-align-left"></i>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <form class="d-flex ms-auto" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                        <div class="d-flex align-items-center ms-4">
+                            <!-- Notification Bell -->
+                            <!-- Notification Bell -->
+                            <a href="/notification"><div class="notification-container">
+                                <button class="notification-btn">
+                                    <i class="lni lni-alarm"></i>
+                                    <span class="badge" style="    position: absolute;
+                                    top: 5px;
+                                    right: 5px;
+                                    background-color: #ff4757;
+                                    font-size: 0.8rem;
+                                    padding: 3px 6px;
+                                    border-radius: 50%;
+                                    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);">3</span>
+                                </button>
+                                <div class="notification-dropdown">
+                                    <h4>Notifications</h4>
+                                    <ul class="notification-list">
+                                        <li>You have a new message.</li>
+                                        <li>Project deadline tomorrow.</li>
+                                        <li>System update completed.</li>
+                                    </ul>
+                                </div>
+                            </div></a>
+                            <!-- User Profile -->
+                             <a href="/profile">
+                            <img src="/static/user.png" class="rounded-circle border border-light mt-2" alt="User Profile" width="40" height="40"
+                                style="box-shadow: 0 0 5px rgba(0,0,0,0.2);"></a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="profile-card mt-5">
+                <h2 class="text-center">Profile</h2>
+
+                <!-- Profile Picture Section -->
+                <div class="text-center mb-4">
+                    <div class="profile-pic">
+                        <img src="https://via.placeholder.com/150" alt="Profile Picture">
+                        <button><i class="lni lni-pencil"></i></button>
+                    </div>
+                </div>
+
+                <!-- Profile Form -->
+                <form>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="firstName" placeholder="First name">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="lastName" placeholder="Last name">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" placeholder="Email address">
+                        </div>
+                    </div>
+
+                    <!-- Address Section -->
+                    <h5 class="mb-3">Address</h5>
+                    <div class="mb-3">
+                        <label for="addressLine1" class="form-label">Address Line 1</label>
+                        <input type="text" class="form-control" id="addressLine1" placeholder="Street address or P.O. Box">
+                    </div>
+                    <div class="mb-3">
+                        <label for="addressLine2" class="form-label">Address Line 2</label>
+                        <input type="text" class="form-control" id="addressLine2"
+                            placeholder="Apartment, suite, unit, etc. (optional)">
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="city" class="form-label">City</label>
+                            <input type="text" class="form-control" id="city" placeholder="City">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="state" class="form-label">State/Province/Region</label>
+                            <input type="text" class="form-control" id="state" placeholder="State/Province">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label for="zip" class="form-label">Zip Code</label>
+                            <input type="text" class="form-control" id="zip" placeholder="Zip/Postal Code">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="country" class="form-label">Country</label>
+                            <input type="text" class="form-control" id="country" placeholder="Country">
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <button class="btn btn-primary change-password-btn" type="button">Change password</button>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <button type="submit" class="save-btn">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+            <script>
+                // Sidebar Toggler
+                const toggler = document.querySelector(".toggler-btn");
+                toggler.addEventListener("click", function () {
+                    document.querySelector("#sidebar").classList.toggle("collapsed");
+                });
+            </script>
+        </div>
+    </div>
+</body>
+
+</html>

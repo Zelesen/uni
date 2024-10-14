@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
+
+
+        :root {
+            --primary-color: #4c1d95;
+            --secondary-color: #4c1d95;
+            --text-color: #0b132b;
+            --background: linear-gradient(to bottom right, #e0e7ff, #ddd6fe, #fed7e2);
+            --card-background: #ffffff;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to bottom right, #e0e7ff, #ddd6fe, #fed7e2);
+            color: var(--text-color);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .search-container {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+            position: relative;
+        }
+
+        h1::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background-color: var(--secondary-color);
+            margin: 1rem auto;
+        }
+
+        .subtitle {
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 3rem;
+            font-weight: 300;
+            font-size: 1.4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); */
+            border-radius: 50px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            width: 50%;
+        }
+
+        .search-bar:focus-within {
+            /* box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); */
+            transform: translateY(-2px);
+        }
+
+        .search-bar input[type="text"] {
+            width: 70%;
+            padding: 1.2rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            background: var(--card-background);
+            color: var(--text-color);
+            outline: none;
+            transition: all 0.3s ease;
+            border-radius: 40px;
+            /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); */
+
+        }
+
+        .search-bar input[type="text"]::placeholder {
+            color: #a0aec0;
+        }
+
+        .search-bar button {
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+            border: none;
+            background: linear-gradient(to right, #6366f1, #a855f7);
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            border-radius: 40px;
+            /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); */
+
+        }
+
+        .search-bar button:hover {
+            background: var(--secondary-color);
+        }
+
+        .results-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .result-item {
+            background: var(--card-background);
+            border-radius: 12px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .result-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-item:hover::before {
+            opacity: 1;
+        }
+
+        .result-item h3 {
+            font-family: 'Playfair Display', serif;
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .result-item h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+
+        .result-item p {
+            margin: 0.8rem 0;
+            color: #4a5568;
+            line-height: 1.8;
+        }
+
+        .result-item .price {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            margin-top: 1.5rem;
+            display: inline-block;
+            background-color: rgba(91, 192, 190, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .result-item .location, .result-item .date {
+            font-size: 0.9rem;
+            color: #718096;
+            margin-top: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .result-item .location::before, .result-item .date::before {
+            content: '';
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-right: 8px;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .result-item .location::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23718096'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z'%3E%3C/path%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 11a3 3 0 11-6 0 3 3 0 016 0z'%3E%3C/path%3E%3C/svg%3E");
+        }
+
+        .result-item .date::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23718096'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'%3E%3C/path%3E%3C/svg%3E");
+        }
+
+        .no-results {
+            text-align: center;
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            grid-column: 1 / -1;
+            padding: 3rem;
+            background: var(--card-background);
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            margin-top: 2rem;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .search-bar {
+                flex-direction: column;
+                box-shadow: none;
+            }
+
+            .search-bar input[type="text"] {
+                width: 100%;
+                border-radius: 8px;
+                margin-bottom: 1rem;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+            }
+
+            .search-bar button {
+                width: 100%;
+                border-radius: 8px;
+            }
+
+            h1 {
+                font-size: 3rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .result-item {
+                padding: 2rem;
+            }
+        }
+        /* Notification container */
+.notification-container {
+    position: relative;
+    display: inline-block;
+}
+.notification-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    padding: 10px;
+    font-size: 1.5rem;
+    color: #000000;
+    transition: transform 0.3s ease;
+}
+.notification-btn:hover {
+    transform: scale(1.2);
+}
+
+.notification-btn:focus {
+    outline: none;
+}
+
+.notification-dropdown {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 250px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 10;
+}
+
+.notification-container:hover .notification-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Notification list */
+.notification-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notification-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.notification-list li:last-child {
+    border-bottom: none;
+}
+    </style>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar-toggle" style="background: linear-gradient(135deg, #6366f1 30%, #a855f7 70%);">
+            <div class="sidebar-logo">
+                <img src="/static/fyx.png" class="dashlogo" alt="User Profile">
+                <a href="#">FYX.AI</a>
+            </div>
+            <ul class="sidebar-nav p-0">
+                <li class="sidebar-item">
+                    <a href="/dashboard" class="sidebar-link">
+                        <i class="lni lni-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#campaignMenu" aria-expanded="true" aria-controls="campaignMenu">
+                        <i class="lni lni-protection"></i>
+                        <span>Campaign</span>
+                    </a>
+                    <ul id="campaignMenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="/create_campaign" class="sidebar-link">Create Campaign</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="/view_campaigns" class="sidebar-link">View Campaign</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#audienceMenu" aria-expanded="true" aria-controls="audienceMenu">
+                        <i class="lni lni-users"></i>
+                        <span>Audience</span>
+                    </a>
+                    <ul id="audienceMenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="/add_product" class="sidebar-link">Create Audience</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="/product_list" class="sidebar-link">View Audience</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/search" class="sidebar-link">
+                        <i class="lni lni-search"></i>
+                        <span>Search Audience</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/report" class="sidebar-link">
+                        <i class="lni lni-book"></i>
+                        <span>Reports</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/setting" class="sidebar-link">
+                        <i class="lni lni-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="/" class="sidebar-link">
+                    <i class="lni lni-exit"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Component -->
+        <div class="main">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm" style="padding: 10px;">
+                <div class="container-fluid">
+                    <i class="toggler-btn lni lni-text-align-left"></i>
+                    <div class="collapse navbar-collapse" id="navbarNav" style="justify-content: end;">
+                        
+                        <div class="d-flex align-items-center ms-4">
+                            <button class="btn btn-light position-relative me-3" style="transition: transform 0.2s;">
+                                <i class="lni lni-alarm" style="font-size: 1.5rem;"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3
+                                    <span class="visually-hidden">unread notifications</span>
+                                </span>
+                            </button>
+                            <a href="/profile">
+                                <img src="/static/user.png" class="rounded-circle border border-light mt-2"
+                                    alt="User Profile" width="40" height="40"
+                                    style="box-shadow: 0 0 5px rgba(0,0,0,0.2);"></a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Search Product Section -->
+           
+            <div class="search-container">
+                <h1>Search Audience</h1>
+                <p class="subtitle">Search by Name, Category, ID...Find people Everyday. </p>
+                <div style="display: flex; justify-content: center;">
+                <form method="GET" action="{% url 'search' %}" class="search-bar">
+                    <input type="text" name="name" placeholder="Search for audience members...">
+                    <button type="submit">Explore</button>
+                </form>
+            </div>
+
+            {% if name_query %}
+                        <h2 style="text-align: center;">Results for "{{ name_query }}"</h2>
+                
+                <div class="results-container" id="productTable" style="margin-top: 35px;">
+                    
+                
+                        {% if products %}
+                            {% for product in products %}
+                                <div class="result-item">
+                                    <h3>{{ product.name }}</h3>
+                                    <p>{{ product.description }}</p>
+                                    <div class="icon-conatiner" style="    display: flex;
+                                    align-items: center;
+                                    gap: 10px;">
+                                    
+                                    <i class="material-icons" style="color: #6366f1;" >&#xe7fb; </i> 200</div>
+                                    <div class="icon-conatiner" style="    display: flex;
+                                    align-items: center;
+                                    gap: 10px; margin-top: 4px;">
+                                    
+                                    <i class="material-icons" style="color: #6366f1;">&#xe417;</i> 200</div>
+                                    
+                                
+                                
+                                
+                                    
+                                    
+                                    
+                                    <div style="display: flex; justify-content: right;"><button style="     border-radius: 10px;
+                                        background: linear-gradient(to right, #6366f1, #a855f7);
+                                        color: white;
+                                        border: 0;
+                                        max-height: 4rem;
+                                        width: 4rem;" >View</button></div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="no-results" >No results found. Try refining your search.</p>
+                        {% endif %}
+                    {% else %}
+                        <p class="no-results">Enter a search query to discover your audience.</p>
+                    {% endif %}
+                    
+                </div>
+            </div>
+    
+
+
+    <script>
+        // Sidebar Toggler
+        const toggler = document.querySelector(".toggler-btn");
+        toggler.addEventListener("click", function () {
+            document.querySelector("#sidebar").classList.toggle("collapsed");
+        });
+
+        // Toggle sidebar when clicking on Campaign or Audience
+        const campaignLink = document.querySelector('.sidebar-link[data-bs-target="#campaignMenu"]');
+        const audienceLink = document.querySelector('.sidebar-link[data-bs-target="#audienceMenu"]');
+
+        campaignLink.addEventListener("click", function() {
+            const sidebar = document.querySelector("#sidebar");
+            if (sidebar.classList.contains("collapsed")) {
+                sidebar.classList.toggle("collapsed");
+            }
+        });
+
+        audienceLink.addEventListener("click", function() {
+            const sidebar = document.querySelector("#sidebar");
+            if (sidebar.classList.contains("collapsed")) {
+                sidebar.classList.toggle("collapsed");
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
